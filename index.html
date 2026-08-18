@@ -33,14 +33,11 @@
   }
   .wrap{max-width:600px;margin:0 auto;padding:0 16px;}
 
-  /* header */
   header{padding:32px 0 18px;}
   header .emoji{font-size:30px; margin-bottom:8px;}
   header h1{font-size:22px; font-weight:800; margin:0 0 6px; letter-spacing:-0.01em;}
   header p{margin:0; font-size:13.5px; color:var(--ink-soft); font-weight:500;}
-  .flight-row{
-    display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;
-  }
+  .flight-row{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;}
   .flight-chip{
     background:var(--card); border:1px solid var(--line);
     border-radius:12px; padding:8px 12px;
@@ -49,18 +46,12 @@
   }
   .flight-chip b{color:var(--ink); font-weight:700;}
 
-  /* sticky day nav */
   .daynav{
     position:sticky; top:0; z-index:10;
     background:var(--bg);
     padding:14px 0;
     display:flex; gap:8px; overflow-x:auto;
     -ms-overflow-style:none; scrollbar-width:none;
-  }
-  .daynav::before{
-    content:''; position:absolute; inset:0;
-    background:linear-gradient(var(--bg), var(--bg) 85%, transparent);
-    z-index:-1;
   }
   .daynav::-webkit-scrollbar{display:none;}
   .daynav a{
@@ -72,7 +63,6 @@
   }
   .daynav a:hover{background:var(--accent); color:#fff; border-color:var(--accent);}
 
-  /* day accordion */
   details.day{
     background:var(--card);
     border-radius:18px;
@@ -96,13 +86,11 @@
     background:var(--accent-soft); padding:4px 10px; border-radius:100px;
     margin-right:10px; white-space:nowrap;
   }
-  .chev{
-    font-size:13px; color:var(--ink-soft);
-    transition:transform .2s;
-  }
+  .chev{font-size:13px; color:var(--ink-soft); transition:transform .2s;}
   details[open] .chev{transform:rotate(180deg);}
 
   .day-body{padding:0 20px 20px;}
+
   .stop{
     display:flex; gap:13px;
     padding:12px 0;
@@ -114,15 +102,34 @@
   .stop .time{font-size:11.5px; font-weight:700; color:var(--ink-soft); margin-bottom:3px; display:block;}
   .stop .title{font-size:14.5px; font-weight:700; margin:0 0 3px;}
   .stop .desc{font-size:12.5px; color:var(--ink-soft); margin:0 0 6px;}
-  .tag{
-    display:inline-block; font-size:11px; font-weight:700;
-    padding:3px 9px; border-radius:100px;
-  }
+  .tag{display:inline-block; font-size:11px; font-weight:700; padding:3px 9px; border-radius:100px;}
   .tag.move{color:var(--move); background:var(--move-bg);}
   .tag.shop{color:var(--shop); background:var(--shop-bg);}
   .tag.onsen{color:var(--onsen); background:var(--onsen-bg);}
   .tag.food{color:var(--food); background:var(--food-bg);}
   .tag.sight{color:var(--sight); background:var(--sight-bg);}
+
+  /* transit connector row */
+  .transit{
+    display:flex; align-items:center; gap:8px;
+    padding:8px 0 8px 37px;
+    position:relative;
+  }
+  .transit::before{
+    content:'';
+    position:absolute; left:11px; top:-2px; bottom:-2px;
+    width:1px; background-image:linear-gradient(var(--line) 60%, transparent 0%);
+    background-size:2px 6px; background-repeat:repeat-y;
+  }
+  .transit .t-icon{font-size:13px;}
+  .transit .t-text{font-size:11.5px; color:var(--move); font-weight:600;}
+  .transit .t-meta{font-size:11.5px; color:var(--ink-soft); font-weight:500;}
+  .transit .t-meta::before{content:'· ';}
+
+  .note-foot{
+    max-width:600px; margin:20px auto 0; padding:0 16px;
+    font-size:11.5px; color:var(--ink-soft); text-align:center;
+  }
 </style>
 </head>
 <body>
@@ -135,6 +142,8 @@
     <div class="flight-row">
       <div class="flight-chip">✈️ <b>피치항공</b> ICN 10:20 → KIX 12:10</div>
       <div class="flight-chip">✈️ <b>이스타항공</b> KIX 17:00 → PUS 18:30</div>
+      <div class="flight-chip">🏨 <b>스마일호텔 가라스마고조</b> 10/24~10/26</div>
+      <div class="flight-chip">♨️ <b>카덴쇼 아라시야마</b> 10/27</div>
     </div>
   </header>
 
@@ -151,25 +160,31 @@
     <summary>
       <div class="summary-left">
         <span class="day-emoji">🛬</span>
-        <div>
-          <div class="day-title">10월 24일 (토)</div>
-          <div class="day-sub">도착 + 교토 첫 밤</div>
-        </div>
+        <div><div class="day-title">10월 24일 (토)</div><div class="day-sub">도착 + 교토 첫 밤</div></div>
       </div>
-      <div style="display:flex;align-items:center;">
-        <span class="day-badge">Day 1</span><span class="chev">▾</span>
-      </div>
+      <div style="display:flex;align-items:center;"><span class="day-badge">Day 1</span><span class="chev">▾</span></div>
     </summary>
     <div class="day-body">
       <div class="stop">
         <span class="icon">✈️</span>
         <div class="content">
           <span class="time">오전 ~ 오후</span>
-          <p class="title">인천 → 간사이 → 교토</p>
-          <p class="desc">피치항공 도착 후 교토로 이동, 숙소 체크인</p>
+          <p class="title">인천 → 간사이공항</p>
+          <p class="desc">피치항공 ICN 10:20 → KIX 12:10</p>
           <span class="tag move">이동</span>
         </div>
       </div>
+      <div class="transit"><span class="t-icon">🚄</span><span class="t-text">JR 하루카</span><span class="t-meta">약 80분 · 약 2,200~3,990엔</span></div>
+      <div class="stop">
+        <span class="icon">🏨</span>
+        <div class="content">
+          <span class="time">오후</span>
+          <p class="title">교토역 → 숙소 체크인</p>
+          <p class="desc">스마일호텔 교토 가라스마고조 체크인</p>
+          <span class="tag move">이동</span>
+        </div>
+      </div>
+      <div class="transit"><span class="t-icon">🚶</span><span class="t-text">도보</span><span class="t-meta">약 15분 · 무료</span></div>
       <div class="stop">
         <span class="icon">🌇</span>
         <div class="content">
@@ -179,6 +194,7 @@
           <span class="tag sight">산책</span>
         </div>
       </div>
+      <div class="transit"><span class="t-icon">🚶</span><span class="t-text">도보</span><span class="t-meta">약 5분 · 무료</span></div>
       <div class="stop">
         <span class="icon">🏮</span>
         <div class="content">
@@ -196,16 +212,12 @@
     <summary>
       <div class="summary-left">
         <span class="day-emoji">⛩️</span>
-        <div>
-          <div class="day-title">10월 25일 (일)</div>
-          <div class="day-sub">붉은 도리이와 사찰</div>
-        </div>
+        <div><div class="day-title">10월 25일 (일)</div><div class="day-sub">붉은 도리이와 사찰</div></div>
       </div>
-      <div style="display:flex;align-items:center;">
-        <span class="day-badge">Day 2</span><span class="chev">▾</span>
-      </div>
+      <div style="display:flex;align-items:center;"><span class="day-badge">Day 2</span><span class="chev">▾</span></div>
     </summary>
     <div class="day-body">
+      <div class="transit"><span class="t-icon">🚃</span><span class="t-text">게이한 본선 (고조역 승차)</span><span class="t-meta">약 15분 · 약 270엔</span></div>
       <div class="stop">
         <span class="icon">⛩️</span>
         <div class="content">
@@ -215,6 +227,7 @@
           <span class="tag sight">명소</span>
         </div>
       </div>
+      <div class="transit"><span class="t-icon">🚌</span><span class="t-text">버스 또는 택시</span><span class="t-meta">버스 약 30분 230엔 · 택시 약 15분 2,000엔~</span></div>
       <div class="stop">
         <span class="icon">🏯</span>
         <div class="content">
@@ -224,6 +237,7 @@
           <span class="tag sight">명소</span>
         </div>
       </div>
+      <div class="transit"><span class="t-icon">🚶</span><span class="t-text">도보</span><span class="t-meta">약 5분 · 무료</span></div>
       <div class="stop">
         <span class="icon">🍡</span>
         <div class="content">
@@ -231,6 +245,16 @@
           <p class="title">산넨자카 · 니넨자카</p>
           <p class="desc">전통 거리 산책, 디저트 · 기념품 쇼핑</p>
           <span class="tag shop">쇼핑</span>
+        </div>
+      </div>
+      <div class="transit"><span class="t-icon">🚌</span><span class="t-text">버스 + 도보</span><span class="t-meta">약 20분 · 약 230엔</span></div>
+      <div class="stop">
+        <span class="icon">🏨</span>
+        <div class="content">
+          <span class="time">저녁</span>
+          <p class="title">스마일호텔 복귀</p>
+          <p class="desc">저녁 식사 후 휴식</p>
+          <span class="tag move">이동</span>
         </div>
       </div>
     </div>
@@ -241,16 +265,12 @@
     <summary>
       <div class="summary-left">
         <span class="day-emoji">🎋</span>
-        <div>
-          <div class="day-title">10월 26일 (월)</div>
-          <div class="day-sub">산속 정원 + 대나무숲</div>
-        </div>
+        <div><div class="day-title">10월 26일 (월)</div><div class="day-sub">산속 정원 + 대나무숲</div></div>
       </div>
-      <div style="display:flex;align-items:center;">
-        <span class="day-badge">Day 3</span><span class="chev">▾</span>
-      </div>
+      <div style="display:flex;align-items:center;"><span class="day-badge">Day 3</span><span class="chev">▾</span></div>
     </summary>
     <div class="day-body">
+      <div class="transit"><span class="t-icon">🚇🚌</span><span class="t-text">지하철 + 버스</span><span class="t-meta">약 65분 · 약 780엔</span></div>
       <div class="stop">
         <span class="icon">🌿</span>
         <div class="content">
@@ -260,6 +280,7 @@
           <span class="tag sight">명소</span>
         </div>
       </div>
+      <div class="transit"><span class="t-icon">🚌🚄</span><span class="t-text">버스 + JR</span><span class="t-meta">약 75분 · 약 800엔</span></div>
       <div class="stop">
         <span class="icon">🎋</span>
         <div class="content">
@@ -269,11 +290,12 @@
           <span class="tag sight">명소</span>
         </div>
       </div>
+      <div class="transit"><span class="t-icon">🚄🚇</span><span class="t-text">JR + 지하철</span><span class="t-meta">약 20분 · 약 460엔</span></div>
       <div class="stop">
         <span class="icon">🏨</span>
         <div class="content">
           <span class="time">저녁</span>
-          <p class="title">호텔 복귀</p>
+          <p class="title">스마일호텔 복귀</p>
           <p class="desc">가라스마 지하철로 편안하게 이동</p>
           <span class="tag move">이동</span>
         </div>
@@ -286,16 +308,12 @@
     <summary>
       <div class="summary-left">
         <span class="day-emoji">♨️</span>
-        <div>
-          <div class="day-title">10월 27일 (화)</div>
-          <div class="day-sub">시내 나들이 + 온천의 밤</div>
-        </div>
+        <div><div class="day-title">10월 27일 (화)</div><div class="day-sub">시내 나들이 + 온천의 밤</div></div>
       </div>
-      <div style="display:flex;align-items:center;">
-        <span class="day-badge">Day 4</span><span class="chev">▾</span>
-      </div>
+      <div style="display:flex;align-items:center;"><span class="day-badge">Day 4</span><span class="chev">▾</span></div>
     </summary>
     <div class="day-body">
+      <div class="transit"><span class="t-icon">🚇</span><span class="t-text">지하철 (환승 1회)</span><span class="t-meta">약 15분 · 약 260엔</span></div>
       <div class="stop">
         <span class="icon">🏯</span>
         <div class="content">
@@ -305,6 +323,7 @@
           <span class="tag sight">명소</span>
         </div>
       </div>
+      <div class="transit"><span class="t-icon">🚇</span><span class="t-text">지하철 (환승 1회)</span><span class="t-meta">약 15분 · 약 260엔</span></div>
       <div class="stop">
         <span class="icon">🍥</span>
         <div class="content">
@@ -314,6 +333,7 @@
           <span class="tag food">식사</span>
         </div>
       </div>
+      <div class="transit"><span class="t-icon">🚶</span><span class="t-text">도보</span><span class="t-meta">약 10분 · 무료</span></div>
       <div class="stop">
         <span class="icon">🎏</span>
         <div class="content">
@@ -323,15 +343,7 @@
           <span class="tag shop">쇼핑</span>
         </div>
       </div>
-      <div class="stop">
-        <span class="icon">🚃</span>
-        <div class="content">
-          <span class="time">오후 4~5시</span>
-          <p class="title">아라시야마로 이동</p>
-          <p class="desc">한큐선, 가쓰라역 환승 (약 25~30분)</p>
-          <span class="tag move">이동</span>
-        </div>
-      </div>
+      <div class="transit"><span class="t-icon">🚃</span><span class="t-text">한큐선 (가쓰라 환승)</span><span class="t-meta">약 25~30분 · 약 250엔</span></div>
       <div class="stop">
         <span class="icon">♨️</span>
         <div class="content">
@@ -349,14 +361,9 @@
     <summary>
       <div class="summary-left">
         <span class="day-emoji">🛫</span>
-        <div>
-          <div class="day-title">10월 28일 (수)</div>
-          <div class="day-sub">온천 + 귀국길</div>
-        </div>
+        <div><div class="day-title">10월 28일 (수)</div><div class="day-sub">온천 + 귀국길</div></div>
       </div>
-      <div style="display:flex;align-items:center;">
-        <span class="day-badge">Day 5</span><span class="chev">▾</span>
-      </div>
+      <div style="display:flex;align-items:center;"><span class="day-badge">Day 5</span><span class="chev">▾</span></div>
     </summary>
     <div class="day-body">
       <div class="stop">
@@ -368,21 +375,23 @@
           <span class="tag onsen">온천</span>
         </div>
       </div>
+      <div class="transit"><span class="t-icon">🚃</span><span class="t-text">한큐선 (가쓰라 환승)</span><span class="t-meta">약 20분 · 약 230엔</span></div>
       <div class="stop">
         <span class="icon">🚌</span>
         <div class="content">
-          <span class="time">정오 ~ 오후 1:30</span>
-          <p class="title">아라시야마 → 시조오미야 → 간사이공항</p>
-          <p class="desc">한큐선 환승 후 공항행 리무진버스</p>
+          <span class="time">정오</span>
+          <p class="title">시조오미야역 도착</p>
+          <p class="desc">공항행 리무진버스 탑승 준비</p>
           <span class="tag move">이동</span>
         </div>
       </div>
+      <div class="transit"><span class="t-icon">🚌</span><span class="t-text">리무진버스</span><span class="t-meta">약 85~90분 · 약 2,600엔</span></div>
       <div class="stop">
         <span class="icon">✈️</span>
         <div class="content">
           <span class="time">오후</span>
           <p class="title">간사이 → 김해</p>
-          <p class="desc">이스타항공 17:00 출발, 18:30 도착</p>
+          <p class="desc">이스타항공 KIX 17:00 → PUS 18:30</p>
           <span class="tag move">이동</span>
         </div>
       </div>
@@ -390,5 +399,6 @@
   </details>
 
 </div>
+<p class="note-foot">※ 요금 · 소요시간은 참고용 대략치예요. 환율 · 배차 시간표에 따라 달라질 수 있어 출발 전 다시 확인하시는 걸 추천해요.</p>
 </body>
 </html>
