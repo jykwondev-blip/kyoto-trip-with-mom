@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>엄마와 함께, 교토 4박 5일</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf7f2;
+    --card:#ffffff;
+    --line:#eee7db;
+    --ink:#1f2024;
+    --ink-soft:#8b8478;
+    --accent:#e2603a;
+    --accent-soft:#fdece3;
+    --move:#4f7cff; --move-bg:#eaf0ff;
+    --shop:#9b6bd1; --shop-bg:#f3edfb;
+    --onsen:#2fa39a; --onsen-bg:#e6f6f4;
+    --food:#e0a72f; --food-bg:#fdf3e0;
+    --sight:#e2603a; --sight-bg:#fdece3;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans KR',-apple-system,sans-serif;
+    line-height:1.5;
+    padding-bottom:60px;
+  }
+  .wrap{max-width:600px;margin:0 auto;padding:0 16px;}
+
+  /* header */
+  header{padding:32px 0 18px;}
+  header .emoji{font-size:30px; margin-bottom:8px;}
+  header h1{font-size:22px; font-weight:800; margin:0 0 6px; letter-spacing:-0.01em;}
+  header p{margin:0; font-size:13.5px; color:var(--ink-soft); font-weight:500;}
+  .flight-row{
+    display:flex; gap:8px; margin-top:14px; flex-wrap:wrap;
+  }
+  .flight-chip{
+    background:var(--card); border:1px solid var(--line);
+    border-radius:12px; padding:8px 12px;
+    font-size:12.5px; font-weight:500; color:var(--ink-soft);
+    display:flex; align-items:center; gap:6px;
+  }
+  .flight-chip b{color:var(--ink); font-weight:700;}
+
+  /* sticky day nav */
+  .daynav{
+    position:sticky; top:0; z-index:10;
+    background:var(--bg);
+    padding:14px 0;
+    display:flex; gap:8px; overflow-x:auto;
+    -ms-overflow-style:none; scrollbar-width:none;
+  }
+  .daynav::before{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(var(--bg), var(--bg) 85%, transparent);
+    z-index:-1;
+  }
+  .daynav::-webkit-scrollbar{display:none;}
+  .daynav a{
+    flex:0 0 auto; text-decoration:none;
+    font-size:13px; font-weight:700; color:var(--ink-soft);
+    background:var(--card); border:1px solid var(--line);
+    padding:9px 16px; border-radius:100px;
+    transition:.15s;
+  }
+  .daynav a:hover{background:var(--accent); color:#fff; border-color:var(--accent);}
+
+  /* day accordion */
+  details.day{
+    background:var(--card);
+    border-radius:18px;
+    margin-bottom:14px;
+    scroll-margin-top:70px;
+    box-shadow:0 1px 3px rgba(31,32,36,0.05);
+    overflow:hidden;
+  }
+  details.day summary{
+    list-style:none; cursor:pointer;
+    padding:20px 20px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  details.day summary::-webkit-details-marker{display:none;}
+  .summary-left{display:flex; align-items:center; gap:12px;}
+  .day-emoji{font-size:22px;}
+  .day-title{font-size:15.5px; font-weight:800;}
+  .day-sub{font-size:12px; color:var(--ink-soft); font-weight:500; margin-top:1px;}
+  .day-badge{
+    font-size:11.5px; font-weight:700; color:var(--accent);
+    background:var(--accent-soft); padding:4px 10px; border-radius:100px;
+    margin-right:10px; white-space:nowrap;
+  }
+  .chev{
+    font-size:13px; color:var(--ink-soft);
+    transition:transform .2s;
+  }
+  details[open] .chev{transform:rotate(180deg);}
+
+  .day-body{padding:0 20px 20px;}
+  .stop{
+    display:flex; gap:13px;
+    padding:12px 0;
+    border-top:1px solid var(--line);
+  }
+  .stop:first-child{border-top:none; padding-top:2px;}
+  .stop .icon{font-size:19px; flex:0 0 24px; text-align:center; padding-top:2px;}
+  .stop .content{flex:1;}
+  .stop .time{font-size:11.5px; font-weight:700; color:var(--ink-soft); margin-bottom:3px; display:block;}
+  .stop .title{font-size:14.5px; font-weight:700; margin:0 0 3px;}
+  .stop .desc{font-size:12.5px; color:var(--ink-soft); margin:0 0 6px;}
+  .tag{
+    display:inline-block; font-size:11px; font-weight:700;
+    padding:3px 9px; border-radius:100px;
+  }
+  .tag.move{color:var(--move); background:var(--move-bg);}
+  .tag.shop{color:var(--shop); background:var(--shop-bg);}
+  .tag.onsen{color:var(--onsen); background:var(--onsen-bg);}
+  .tag.food{color:var(--food); background:var(--food-bg);}
+  .tag.sight{color:var(--sight); background:var(--sight-bg);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="emoji">🍁</div>
+    <h1>엄마와 함께, 교토</h1>
+    <p>2026.10.24 (토) – 10.28 (수) · 4박 5일</p>
+    <div class="flight-row">
+      <div class="flight-chip">✈️ <b>피치항공</b> ICN 10:20 → KIX 12:10</div>
+      <div class="flight-chip">✈️ <b>이스타항공</b> KIX 17:00 → PUS 18:30</div>
+    </div>
+  </header>
+
+  <div class="daynav">
+    <a href="#d1">10/24</a>
+    <a href="#d2">10/25</a>
+    <a href="#d3">10/26</a>
+    <a href="#d4">10/27</a>
+    <a href="#d5">10/28</a>
+  </div>
+
+  <!-- DAY 1 -->
+  <details class="day" id="d1" open>
+    <summary>
+      <div class="summary-left">
+        <span class="day-emoji">🛬</span>
+        <div>
+          <div class="day-title">10월 24일 (토)</div>
+          <div class="day-sub">도착 + 교토 첫 밤</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;">
+        <span class="day-badge">Day 1</span><span class="chev">▾</span>
+      </div>
+    </summary>
+    <div class="day-body">
+      <div class="stop">
+        <span class="icon">✈️</span>
+        <div class="content">
+          <span class="time">오전 ~ 오후</span>
+          <p class="title">인천 → 간사이 → 교토</p>
+          <p class="desc">피치항공 도착 후 교토로 이동, 숙소 체크인</p>
+          <span class="tag move">이동</span>
+        </div>
+      </div>
+      <div class="stop">
+        <span class="icon">🌇</span>
+        <div class="content">
+          <span class="time">저녁</span>
+          <p class="title">가모강변 산책</p>
+          <p class="desc">노을 지는 강변, 여유롭게 걸으며 몸 풀기</p>
+          <span class="tag sight">산책</span>
+        </div>
+      </div>
+      <div class="stop">
+        <span class="icon">🏮</span>
+        <div class="content">
+          <span class="time">저녁</span>
+          <p class="title">기온 · 폰토초 저녁 산책</p>
+          <p class="desc">골목 사이 전통 유흥가 구경, 첫 저녁 식사</p>
+          <span class="tag food">식사</span>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- DAY 2 -->
+  <details class="day" id="d2" open>
+    <summary>
+      <div class="summary-left">
+        <span class="day-emoji">⛩️</span>
+        <div>
+          <div class="day-title">10월 25일 (일)</div>
+          <div class="day-sub">붉은 도리이와 사찰</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;">
+        <span class="day-badge">Day 2</span><span class="chev">▾</span>
+      </div>
+    </summary>
+    <div class="day-body">
+      <div class="stop">
+        <span class="icon">⛩️</span>
+        <div class="content">
+          <span class="time">오전</span>
+          <p class="title">후시미이나리 신사</p>
+          <p class="desc">붉은 도리이 천 개, 이른 아침이 한적함</p>
+          <span class="tag sight">명소</span>
+        </div>
+      </div>
+      <div class="stop">
+        <span class="icon">🏯</span>
+        <div class="content">
+          <span class="time">낮</span>
+          <p class="title">기요미즈데라</p>
+          <p class="desc">교토 대표 사찰, 물들기 시작한 단풍</p>
+          <span class="tag sight">명소</span>
+        </div>
+      </div>
+      <div class="stop">
+        <span class="icon">🍡</span>
+        <div class="content">
+          <span class="time">오후</span>
+          <p class="title">산넨자카 · 니넨자카</p>
+          <p class="desc">전통 거리 산책, 디저트 · 기념품 쇼핑</p>
+          <span class="tag shop">쇼핑</span>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- DAY 3 -->
+  <details class="day" id="d3" open>
+    <summary>
+      <div class="summary-left">
+        <span class="day-emoji">🎋</span>
+        <div>
+          <div class="day-title">10월 26일 (월)</div>
+          <div class="day-sub">산속 정원 + 대나무숲</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;">
+        <span class="day-badge">Day 3</span><span class="chev">▾</span>
+      </div>
+    </summary>
+    <div class="day-body">
+      <div class="stop">
+        <span class="icon">🌿</span>
+        <div class="content">
+          <span class="time">오전</span>
+          <p class="title">오하라 호센인</p>
+          <p class="desc">액자 정원으로 유명한 조용한 사찰</p>
+          <span class="tag sight">명소</span>
+        </div>
+      </div>
+      <div class="stop">
+        <span class="icon">🎋</span>
+        <div class="content">
+          <span class="time">오후</span>
+          <p class="title">아라시야마 대나무숲 · 텐류지</p>
+          <p class="desc">대나무숲과 도게츠쿄 다리 산책</p>
+          <span class="tag sight">명소</span>
+        </div>
+      </div>
+      <div class="stop">
+        <span class="icon">🏨</span>
+        <div class="content">
+          <span class="time">저녁</span>
+          <p class="title">호텔 복귀</p>
+          <p class="desc">가라스마 지하철로 편안하게 이동</p>
+          <span class="tag move">이동</span>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- DAY 4 -->
+  <details class="day" id="d4" open>
+    <summary>
+      <div class="summary-left">
+        <span class="day-emoji">♨️</span>
+        <div>
+          <div class="day-title">10월 27일 (화)</div>
+          <div class="day-sub">시내 나들이 + 온천의 밤</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;">
+        <span class="day-badge">Day 4</span><span class="chev">▾</span>
+      </div>
+    </summary>
+    <div class="day-body">
+      <div class="stop">
+        <span class="icon">🏯</span>
+        <div class="content">
+          <span class="time">오전</span>
+          <p class="title">니조성</p>
+          <p class="desc">세계문화유산 성과 정원 관람</p>
+          <span class="tag sight">명소</span>
+        </div>
+      </div>
+      <div class="stop">
+        <span class="icon">🍥</span>
+        <div class="content">
+          <span class="time">점심</span>
+          <p class="title">니시키시장 + 스누피차야</p>
+          <p class="desc">교토의 부엌, 스누피 차야에서 간식</p>
+          <span class="tag food">식사</span>
+        </div>
+      </div>
+      <div class="stop">
+        <span class="icon">🎏</span>
+        <div class="content">
+          <span class="time">오후</span>
+          <p class="title">키디랜드 교토</p>
+          <p class="desc">시조카와라마치점, 캐릭터 굿즈 쇼핑</p>
+          <span class="tag shop">쇼핑</span>
+        </div>
+      </div>
+      <div class="stop">
+        <span class="icon">🚃</span>
+        <div class="content">
+          <span class="time">오후 4~5시</span>
+          <p class="title">아라시야마로 이동</p>
+          <p class="desc">한큐선, 가쓰라역 환승 (약 25~30분)</p>
+          <span class="tag move">이동</span>
+        </div>
+      </div>
+      <div class="stop">
+        <span class="icon">♨️</span>
+        <div class="content">
+          <span class="time">저녁</span>
+          <p class="title">카덴쇼 체크인 (1박)</p>
+          <p class="desc">아라시야마 온천, 가족탕 무료 이용</p>
+          <span class="tag onsen">온천</span>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- DAY 5 -->
+  <details class="day" id="d5" open>
+    <summary>
+      <div class="summary-left">
+        <span class="day-emoji">🛫</span>
+        <div>
+          <div class="day-title">10월 28일 (수)</div>
+          <div class="day-sub">온천 + 귀국길</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;">
+        <span class="day-badge">Day 5</span><span class="chev">▾</span>
+      </div>
+    </summary>
+    <div class="day-body">
+      <div class="stop">
+        <span class="icon">♨️</span>
+        <div class="content">
+          <span class="time">오전</span>
+          <p class="title">온천 후 체크아웃</p>
+          <p class="desc">여유롭게 마지막 온천, 짐 정리</p>
+          <span class="tag onsen">온천</span>
+        </div>
+      </div>
+      <div class="stop">
+        <span class="icon">🚌</span>
+        <div class="content">
+          <span class="time">정오 ~ 오후 1:30</span>
+          <p class="title">아라시야마 → 시조오미야 → 간사이공항</p>
+          <p class="desc">한큐선 환승 후 공항행 리무진버스</p>
+          <span class="tag move">이동</span>
+        </div>
+      </div>
+      <div class="stop">
+        <span class="icon">✈️</span>
+        <div class="content">
+          <span class="time">오후</span>
+          <p class="title">간사이 → 김해</p>
+          <p class="desc">이스타항공 17:00 출발, 18:30 도착</p>
+          <span class="tag move">이동</span>
+        </div>
+      </div>
+    </div>
+  </details>
+
+</div>
+</body>
+</html>
