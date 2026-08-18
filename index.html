@@ -11,7 +11,7 @@
   :root{
     --bg:#faf7f2;
     --card:#ffffff;
-    --line:#eee7db;
+    --line:#e6dfd1;
     --ink:#1f2024;
     --ink-soft:#8b8478;
     --accent:#e2603a;
@@ -89,16 +89,39 @@
   .chev{font-size:13px; color:var(--ink-soft); transition:transform .2s;}
   details[open] .chev{transform:rotate(180deg);}
 
-  .day-body{padding:0 20px 20px;}
+  .day-body{padding:4px 20px 22px;}
+
+  /* continuous vertical route line behind everything */
+  .timeline{position:relative;}
+  .timeline::before{
+    content:'';
+    position:absolute;
+    left:11px;
+    top:16px;
+    bottom:16px;
+    width:2px;
+    background:var(--line);
+    border-radius:2px;
+  }
 
   .stop{
+    position:relative;
     display:flex; gap:13px;
-    padding:12px 0;
-    border-top:1px solid var(--line);
+    padding:10px 0;
   }
-  .stop:first-child{border-top:none; padding-top:2px;}
-  .stop .icon{font-size:19px; flex:0 0 24px; text-align:center; padding-top:2px;}
-  .stop .content{flex:1;}
+  .stop .icon{
+    position:relative; z-index:1;
+    flex:0 0 24px; height:24px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .stop .icon::after{
+    content:'';
+    width:11px; height:11px;
+    border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 4px var(--card);
+  }
+  .stop .content{flex:1; padding-top:1px;}
   .stop .time{font-size:11.5px; font-weight:700; color:var(--ink-soft); margin-bottom:3px; display:block;}
   .stop .title{font-size:14.5px; font-weight:700; margin:0 0 3px;}
   .stop .desc{font-size:12.5px; color:var(--ink-soft); margin:0 0 6px;}
@@ -109,19 +132,24 @@
   .tag.food{color:var(--food); background:var(--food-bg);}
   .tag.sight{color:var(--sight); background:var(--sight-bg);}
 
-  /* transit connector row */
+  /* transit connector row — sits on the same line, smaller marker */
   .transit{
-    display:flex; align-items:center; gap:8px;
-    padding:8px 0 8px 37px;
     position:relative;
+    display:flex; align-items:center; gap:13px;
+    padding:6px 0;
   }
-  .transit::before{
+  .transit .t-icon{
+    position:relative; z-index:1;
+    flex:0 0 24px; height:16px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .transit .t-icon::after{
     content:'';
-    position:absolute; left:11px; top:-2px; bottom:-2px;
-    width:1px; background-image:linear-gradient(var(--line) 60%, transparent 0%);
-    background-size:2px 6px; background-repeat:repeat-y;
+    width:6px; height:6px;
+    border-radius:50%;
+    background:var(--card);
+    border:1.5px solid var(--ink-soft);
   }
-  .transit .t-icon{font-size:13px;}
   .transit .t-text{font-size:11.5px; color:var(--move); font-weight:600;}
   .transit .t-meta{font-size:11.5px; color:var(--ink-soft); font-weight:500;}
   .transit .t-meta::before{content:'· ';}
@@ -143,7 +171,7 @@
       <div class="flight-chip">✈️ <b>피치항공</b> ICN 10:20 → KIX 12:10</div>
       <div class="flight-chip">✈️ <b>이스타항공</b> KIX 17:00 → PUS 18:30</div>
       <div class="flight-chip">🏨 <b>스마일호텔 가라스마고조</b> 10/24~10/26</div>
-      <div class="flight-chip">♨️ <b>카덴쇼 아라시야마</b> 10/27</div>
+      <div class="flight-chip">♨️ <b>우메코지 카덴쇼</b> 10/27 (교토역 도보 2분)</div>
     </div>
   </header>
 
@@ -165,43 +193,45 @@
       <div style="display:flex;align-items:center;"><span class="day-badge">Day 1</span><span class="chev">▾</span></div>
     </summary>
     <div class="day-body">
-      <div class="stop">
-        <span class="icon">✈️</span>
-        <div class="content">
-          <span class="time">오전 ~ 오후</span>
-          <p class="title">인천 → 간사이공항</p>
-          <p class="desc">피치항공 ICN 10:20 → KIX 12:10</p>
-          <span class="tag move">이동</span>
+      <div class="timeline">
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">오전 ~ 오후</span>
+            <p class="title">인천 → 간사이공항</p>
+            <p class="desc">피치항공 ICN 10:20 → KIX 12:10</p>
+            <span class="tag move">이동</span>
+          </div>
         </div>
-      </div>
-      <div class="transit"><span class="t-icon">🚄</span><span class="t-text">JR 하루카</span><span class="t-meta">약 80분 · 약 2,200~3,990엔</span></div>
-      <div class="stop">
-        <span class="icon">🏨</span>
-        <div class="content">
-          <span class="time">오후</span>
-          <p class="title">교토역 → 숙소 체크인</p>
-          <p class="desc">스마일호텔 교토 가라스마고조 체크인</p>
-          <span class="tag move">이동</span>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">JR 하루카</span><span class="t-meta">약 80분 · 약 2,200~3,990엔</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">오후</span>
+            <p class="title">교토역 → 숙소 체크인</p>
+            <p class="desc">스마일호텔 교토 가라스마고조 체크인</p>
+            <span class="tag move">이동</span>
+          </div>
         </div>
-      </div>
-      <div class="transit"><span class="t-icon">🚶</span><span class="t-text">도보</span><span class="t-meta">약 15분 · 무료</span></div>
-      <div class="stop">
-        <span class="icon">🌇</span>
-        <div class="content">
-          <span class="time">저녁</span>
-          <p class="title">가모강변 산책</p>
-          <p class="desc">노을 지는 강변, 여유롭게 걸으며 몸 풀기</p>
-          <span class="tag sight">산책</span>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">도보</span><span class="t-meta">약 15분 · 무료</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">저녁</span>
+            <p class="title">가모강변 산책</p>
+            <p class="desc">노을 지는 강변, 여유롭게 걸으며 몸 풀기</p>
+            <span class="tag sight">산책</span>
+          </div>
         </div>
-      </div>
-      <div class="transit"><span class="t-icon">🚶</span><span class="t-text">도보</span><span class="t-meta">약 5분 · 무료</span></div>
-      <div class="stop">
-        <span class="icon">🏮</span>
-        <div class="content">
-          <span class="time">저녁</span>
-          <p class="title">기온 · 폰토초 저녁 산책</p>
-          <p class="desc">골목 사이 전통 유흥가 구경, 첫 저녁 식사</p>
-          <span class="tag food">식사</span>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">도보</span><span class="t-meta">약 5분 · 무료</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">저녁</span>
+            <p class="title">기온 · 폰토초 저녁 산책</p>
+            <p class="desc">골목 사이 전통 유흥가 구경, 첫 저녁 식사</p>
+            <span class="tag food">식사</span>
+          </div>
         </div>
       </div>
     </div>
@@ -217,44 +247,46 @@
       <div style="display:flex;align-items:center;"><span class="day-badge">Day 2</span><span class="chev">▾</span></div>
     </summary>
     <div class="day-body">
-      <div class="transit"><span class="t-icon">🚃</span><span class="t-text">게이한 본선 (고조역 승차)</span><span class="t-meta">약 15분 · 약 270엔</span></div>
-      <div class="stop">
-        <span class="icon">⛩️</span>
-        <div class="content">
-          <span class="time">오전</span>
-          <p class="title">후시미이나리 신사</p>
-          <p class="desc">붉은 도리이 천 개, 이른 아침이 한적함</p>
-          <span class="tag sight">명소</span>
+      <div class="timeline">
+        <div class="transit"><span class="t-icon"></span><span class="t-text">게이한 본선 (고조역 승차)</span><span class="t-meta">약 15분 · 약 270엔</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">오전</span>
+            <p class="title">후시미이나리 신사</p>
+            <p class="desc">붉은 도리이 천 개, 이른 아침이 한적함</p>
+            <span class="tag sight">명소</span>
+          </div>
         </div>
-      </div>
-      <div class="transit"><span class="t-icon">🚌</span><span class="t-text">버스 또는 택시</span><span class="t-meta">버스 약 30분 230엔 · 택시 약 15분 2,000엔~</span></div>
-      <div class="stop">
-        <span class="icon">🏯</span>
-        <div class="content">
-          <span class="time">낮</span>
-          <p class="title">기요미즈데라</p>
-          <p class="desc">교토 대표 사찰, 물들기 시작한 단풍</p>
-          <span class="tag sight">명소</span>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">버스 또는 택시</span><span class="t-meta">버스 약 30분 230엔 · 택시 약 15분 2,000엔~</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">낮</span>
+            <p class="title">기요미즈데라</p>
+            <p class="desc">교토 대표 사찰, 물들기 시작한 단풍</p>
+            <span class="tag sight">명소</span>
+          </div>
         </div>
-      </div>
-      <div class="transit"><span class="t-icon">🚶</span><span class="t-text">도보</span><span class="t-meta">약 5분 · 무료</span></div>
-      <div class="stop">
-        <span class="icon">🍡</span>
-        <div class="content">
-          <span class="time">오후</span>
-          <p class="title">산넨자카 · 니넨자카</p>
-          <p class="desc">전통 거리 산책, 디저트 · 기념품 쇼핑</p>
-          <span class="tag shop">쇼핑</span>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">도보</span><span class="t-meta">약 5분 · 무료</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">오후</span>
+            <p class="title">산넨자카 · 니넨자카</p>
+            <p class="desc">전통 거리 산책, 디저트 · 기념품 쇼핑</p>
+            <span class="tag shop">쇼핑</span>
+          </div>
         </div>
-      </div>
-      <div class="transit"><span class="t-icon">🚌</span><span class="t-text">버스 + 도보</span><span class="t-meta">약 20분 · 약 230엔</span></div>
-      <div class="stop">
-        <span class="icon">🏨</span>
-        <div class="content">
-          <span class="time">저녁</span>
-          <p class="title">스마일호텔 복귀</p>
-          <p class="desc">저녁 식사 후 휴식</p>
-          <span class="tag move">이동</span>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">버스 + 도보</span><span class="t-meta">약 20분 · 약 230엔</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">저녁</span>
+            <p class="title">스마일호텔 복귀</p>
+            <p class="desc">저녁 식사 후 휴식</p>
+            <span class="tag move">이동</span>
+          </div>
         </div>
       </div>
     </div>
@@ -270,34 +302,36 @@
       <div style="display:flex;align-items:center;"><span class="day-badge">Day 3</span><span class="chev">▾</span></div>
     </summary>
     <div class="day-body">
-      <div class="transit"><span class="t-icon">🚇🚌</span><span class="t-text">지하철 + 버스</span><span class="t-meta">약 65분 · 약 780엔</span></div>
-      <div class="stop">
-        <span class="icon">🌿</span>
-        <div class="content">
-          <span class="time">오전</span>
-          <p class="title">오하라 호센인</p>
-          <p class="desc">액자 정원으로 유명한 조용한 사찰</p>
-          <span class="tag sight">명소</span>
+      <div class="timeline">
+        <div class="transit"><span class="t-icon"></span><span class="t-text">지하철 + 버스</span><span class="t-meta">약 65분 · 약 780엔</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">오전</span>
+            <p class="title">오하라 호센인</p>
+            <p class="desc">액자 정원으로 유명한 조용한 사찰</p>
+            <span class="tag sight">명소</span>
+          </div>
         </div>
-      </div>
-      <div class="transit"><span class="t-icon">🚌🚄</span><span class="t-text">버스 + JR</span><span class="t-meta">약 75분 · 약 800엔</span></div>
-      <div class="stop">
-        <span class="icon">🎋</span>
-        <div class="content">
-          <span class="time">오후</span>
-          <p class="title">아라시야마 대나무숲 · 텐류지</p>
-          <p class="desc">대나무숲과 도게츠쿄 다리 산책</p>
-          <span class="tag sight">명소</span>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">버스 + JR</span><span class="t-meta">약 75분 · 약 800엔</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">오후</span>
+            <p class="title">아라시야마 대나무숲 · 텐류지</p>
+            <p class="desc">대나무숲과 도게츠쿄 다리 산책</p>
+            <span class="tag sight">명소</span>
+          </div>
         </div>
-      </div>
-      <div class="transit"><span class="t-icon">🚄🚇</span><span class="t-text">JR + 지하철</span><span class="t-meta">약 20분 · 약 460엔</span></div>
-      <div class="stop">
-        <span class="icon">🏨</span>
-        <div class="content">
-          <span class="time">저녁</span>
-          <p class="title">스마일호텔 복귀</p>
-          <p class="desc">가라스마 지하철로 편안하게 이동</p>
-          <span class="tag move">이동</span>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">JR + 지하철</span><span class="t-meta">약 20분 · 약 460엔</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">저녁</span>
+            <p class="title">스마일호텔 복귀</p>
+            <p class="desc">가라스마 지하철로 편안하게 이동</p>
+            <span class="tag move">이동</span>
+          </div>
         </div>
       </div>
     </div>
@@ -313,44 +347,46 @@
       <div style="display:flex;align-items:center;"><span class="day-badge">Day 4</span><span class="chev">▾</span></div>
     </summary>
     <div class="day-body">
-      <div class="transit"><span class="t-icon">🚇</span><span class="t-text">지하철 (환승 1회)</span><span class="t-meta">약 15분 · 약 260엔</span></div>
-      <div class="stop">
-        <span class="icon">🏯</span>
-        <div class="content">
-          <span class="time">오전</span>
-          <p class="title">니조성</p>
-          <p class="desc">세계문화유산 성과 정원 관람</p>
-          <span class="tag sight">명소</span>
+      <div class="timeline">
+        <div class="transit"><span class="t-icon"></span><span class="t-text">지하철 (환승 1회)</span><span class="t-meta">약 15분 · 약 260엔</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">오전</span>
+            <p class="title">니조성</p>
+            <p class="desc">세계문화유산 성과 정원 관람</p>
+            <span class="tag sight">명소</span>
+          </div>
         </div>
-      </div>
-      <div class="transit"><span class="t-icon">🚇</span><span class="t-text">지하철 (환승 1회)</span><span class="t-meta">약 15분 · 약 260엔</span></div>
-      <div class="stop">
-        <span class="icon">🍥</span>
-        <div class="content">
-          <span class="time">점심</span>
-          <p class="title">니시키시장 + 스누피차야</p>
-          <p class="desc">교토의 부엌, 스누피 차야에서 간식</p>
-          <span class="tag food">식사</span>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">지하철 (환승 1회)</span><span class="t-meta">약 15분 · 약 260엔</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">점심</span>
+            <p class="title">니시키시장 + 스누피차야</p>
+            <p class="desc">교토의 부엌, 스누피 차야에서 간식</p>
+            <span class="tag food">식사</span>
+          </div>
         </div>
-      </div>
-      <div class="transit"><span class="t-icon">🚶</span><span class="t-text">도보</span><span class="t-meta">약 10분 · 무료</span></div>
-      <div class="stop">
-        <span class="icon">🎏</span>
-        <div class="content">
-          <span class="time">오후</span>
-          <p class="title">키디랜드 교토</p>
-          <p class="desc">시조카와라마치점, 캐릭터 굿즈 쇼핑</p>
-          <span class="tag shop">쇼핑</span>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">도보</span><span class="t-meta">약 10분 · 무료</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">오후</span>
+            <p class="title">키디랜드 교토</p>
+            <p class="desc">시조카와라마치점, 캐릭터 굿즈 쇼핑</p>
+            <span class="tag shop">쇼핑</span>
+          </div>
         </div>
-      </div>
-      <div class="transit"><span class="t-icon">🚃</span><span class="t-text">한큐선 (가쓰라 환승)</span><span class="t-meta">약 25~30분 · 약 250엔</span></div>
-      <div class="stop">
-        <span class="icon">♨️</span>
-        <div class="content">
-          <span class="time">저녁</span>
-          <p class="title">카덴쇼 체크인 (1박)</p>
-          <p class="desc">아라시야마 온천, 가족탕 무료 이용</p>
-          <span class="tag onsen">온천</span>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">지하철 + JR (교토역 환승)</span><span class="t-meta">약 15분 · 약 370엔</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">저녁</span>
+            <p class="title">우메코지 카덴쇼 체크인 (1박)</p>
+            <p class="desc">JR 우메코지쿄토니시역 도보 2분, 대욕장·가족탕 온천</p>
+            <span class="tag onsen">온천</span>
+          </div>
         </div>
       </div>
     </div>
@@ -366,33 +402,35 @@
       <div style="display:flex;align-items:center;"><span class="day-badge">Day 5</span><span class="chev">▾</span></div>
     </summary>
     <div class="day-body">
-      <div class="stop">
-        <span class="icon">♨️</span>
-        <div class="content">
-          <span class="time">오전</span>
-          <p class="title">온천 후 체크아웃</p>
-          <p class="desc">여유롭게 마지막 온천, 짐 정리</p>
-          <span class="tag onsen">온천</span>
+      <div class="timeline">
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">오전</span>
+            <p class="title">온천 후 체크아웃</p>
+            <p class="desc">여유롭게 마지막 온천, 짐 정리</p>
+            <span class="tag onsen">온천</span>
+          </div>
         </div>
-      </div>
-      <div class="transit"><span class="t-icon">🚃</span><span class="t-text">한큐선 (가쓰라 환승)</span><span class="t-meta">약 20분 · 약 230엔</span></div>
-      <div class="stop">
-        <span class="icon">🚌</span>
-        <div class="content">
-          <span class="time">정오</span>
-          <p class="title">시조오미야역 도착</p>
-          <p class="desc">공항행 리무진버스 탑승 준비</p>
-          <span class="tag move">이동</span>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">JR (교토역 경유)</span><span class="t-meta">약 3분 · 약 150엔</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">정오</span>
+            <p class="title">교토역 도착 → 하루카 탑승</p>
+            <p class="desc">JR 하루카 특급으로 간사이공항 이동</p>
+            <span class="tag move">이동</span>
+          </div>
         </div>
-      </div>
-      <div class="transit"><span class="t-icon">🚌</span><span class="t-text">리무진버스</span><span class="t-meta">약 85~90분 · 약 2,600엔</span></div>
-      <div class="stop">
-        <span class="icon">✈️</span>
-        <div class="content">
-          <span class="time">오후</span>
-          <p class="title">간사이 → 김해</p>
-          <p class="desc">이스타항공 KIX 17:00 → PUS 18:30</p>
-          <span class="tag move">이동</span>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">JR 하루카 특급</span><span class="t-meta">약 80분 · 약 2,200~3,990엔</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">오후</span>
+            <p class="title">간사이 → 김해</p>
+            <p class="desc">이스타항공 KIX 17:00 → PUS 18:30</p>
+            <span class="tag move">이동</span>
+          </div>
         </div>
       </div>
     </div>
