@@ -158,6 +158,51 @@
     max-width:600px; margin:20px auto 0; padding:0 16px;
     font-size:11.5px; color:var(--ink-soft); text-align:center;
   }
+
+  /* ---- top-level tabs ---- */
+  .maintabs{
+    display:flex; gap:8px; margin:4px 0 18px;
+  }
+  .maintabs button{
+    flex:1; cursor:pointer; border:none;
+    font-family:'Noto Sans KR',sans-serif;
+    font-size:14px; font-weight:700; color:var(--ink-soft);
+    background:var(--card); border:1px solid var(--line);
+    padding:12px 10px; border-radius:14px;
+    transition:.15s;
+  }
+  .maintabs button.active{
+    background:var(--ink); color:#fff; border-color:var(--ink);
+  }
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  /* ---- packing list ---- */
+  .pack-cat{
+    background:var(--card); border-radius:18px; padding:18px 20px;
+    margin-bottom:14px; box-shadow:0 1px 3px rgba(31,32,36,0.05);
+  }
+  .pack-cat h3{
+    display:flex; align-items:center; gap:8px;
+    font-size:14.5px; font-weight:800; margin:0 0 12px;
+  }
+  .pack-item{
+    display:flex; align-items:flex-start; gap:10px;
+    padding:8px 0; border-top:1px solid var(--line);
+    cursor:pointer;
+  }
+  .pack-item:first-of-type{border-top:none; padding-top:0;}
+  .pack-item input{
+    margin-top:3px; width:16px; height:16px; flex:0 0 16px;
+    accent-color:var(--accent); cursor:pointer;
+  }
+  .pack-item .pi-text{font-size:13.5px;}
+  .pack-item .pi-sub{display:block; font-size:11.5px; color:var(--ink-soft); margin-top:1px; font-weight:400;}
+  .pack-item.checked .pi-text{color:var(--ink-soft); text-decoration:line-through;}
+  .pack-progress{
+    font-size:12px; color:var(--ink-soft); font-weight:600;
+    text-align:right; margin:-6px 2px 14px;
+  }
 </style>
 </head>
 <body>
@@ -167,13 +212,14 @@
     <div class="emoji">🍁</div>
     <h1>엄마와 함께, 교토</h1>
     <p>2026.10.24 (토) – 10.28 (수) · 4박 5일</p>
-    <div class="flight-row">
-      <div class="flight-chip">✈️ <b>제주항공 7C1303</b> ICN 09:05 → KIX 10:55경</div>
-      <div class="flight-chip">✈️ <b>이스타항공 ZE0916</b> KIX 17:00 → PUS 18:30</div>
-      <div class="flight-chip">🏨 <b>스마일호텔 가라스마고조</b> 10/24~10/26</div>
-      <div class="flight-chip">♨️ <b>우메코지 카덴쇼</b> 10/27 (교토역 도보 2분)</div>
-    </div>
   </header>
+
+  <div class="maintabs">
+    <button id="btn-itinerary" class="active" onclick="showTab('itinerary')">📅 일정표</button>
+    <button id="btn-packing" onclick="showTab('packing')">🧳 준비물 체크리스트</button>
+  </div>
+
+  <div id="tab-itinerary" class="tab-panel active">
 
   <div class="daynav">
     <a href="#d1">10/24</a>
@@ -436,7 +482,101 @@
     </div>
   </details>
 
+  </div><!-- /tab-itinerary -->
+
+  <div id="tab-packing" class="tab-panel">
+
+    <p class="pack-progress" id="pack-progress">0 / 0 챙김</p>
+
+    <div class="pack-cat">
+      <h3>📄 필수 서류</h3>
+      <label class="pack-item"><input type="checkbox" data-id="doc1"><span class="pi-text">여권<span class="pi-sub">유효기간 6개월 이상 남았는지 확인</span></span></label>
+      <label class="pack-item"><input type="checkbox" data-id="doc2"><span class="pi-text">항공권 E-티켓<span class="pi-sub">캡처본 또는 출력본, 예약번호 메모</span></span></label>
+      <label class="pack-item"><input type="checkbox" data-id="doc3"><span class="pi-text">숙소 예약 확인서<span class="pi-sub">스마일호텔 · 우메코지 카덴쇼</span></span></label>
+      <label class="pack-item"><input type="checkbox" data-id="doc4"><span class="pi-text">여행자보험 가입증서</span></label>
+    </div>
+
+    <div class="pack-cat">
+      <h3>💴 결제 · 통신</h3>
+      <label class="pack-item"><input type="checkbox" data-id="pay1"><span class="pi-text">엔화 현금</span></label>
+      <label class="pack-item"><input type="checkbox" data-id="pay2"><span class="pi-text">해외결제 가능 카드<span class="pi-sub">신용/체크카드, 비상용 여분 카드 1장</span></span></label>
+      <label class="pack-item"><input type="checkbox" data-id="pay3"><span class="pi-text">포켓와이파이 또는 유심/이심</span></label>
+      <label class="pack-item"><input type="checkbox" data-id="pay4"><span class="pi-text">보조배터리<span class="pi-sub">기내 휴대만 가능, 위탁수하물 불가</span></span></label>
+    </div>
+
+    <div class="pack-cat">
+      <h3>🔌 전자기기</h3>
+      <label class="pack-item"><input type="checkbox" data-id="elec1"><span class="pi-text">휴대폰 충전기 · 케이블</span></label>
+      <label class="pack-item"><input type="checkbox" data-id="elec2"><span class="pi-text">멀티 어댑터<span class="pi-sub">일본은 콘센트 모양이 달라요 (100V, 평행 2핀)</span></span></label>
+      <label class="pack-item"><input type="checkbox" data-id="elec3"><span class="pi-text">카메라 (선택)</span></label>
+    </div>
+
+    <div class="pack-cat">
+      <h3>👕 의류</h3>
+      <label class="pack-item"><input type="checkbox" data-id="cloth1"><span class="pi-text">얇은 가디건 · 재킷<span class="pi-sub">10월 말 아침저녁 쌀쌀, 낮엔 따뜻 — 레이어드 추천</span></span></label>
+      <label class="pack-item"><input type="checkbox" data-id="cloth2"><span class="pi-text">편한 운동화<span class="pi-sub">걷는 일정 많음, 새 신발보다 길든 신발 추천</span></span></label>
+      <label class="pack-item"><input type="checkbox" data-id="cloth3"><span class="pi-text">우산 또는 우비<span class="pi-sub">환절기 소나기 대비</span></span></label>
+      <label class="pack-item"><input type="checkbox" data-id="cloth4"><span class="pi-text">여벌 옷 2~3일치</span></label>
+      <label class="pack-item"><input type="checkbox" data-id="cloth5"><span class="pi-text">온천용 실내복 · 속옷<span class="pi-sub">우메코지 카덴쇼 1박용, 유카타는 숙소 비치</span></span></label>
+    </div>
+
+    <div class="pack-cat">
+      <h3>💊 상비약 · 위생용품</h3>
+      <label class="pack-item"><input type="checkbox" data-id="med1"><span class="pi-text">평소 복용약<span class="pi-sub">엄마 상비약 여유분까지 챙기기</span></span></label>
+      <label class="pack-item"><input type="checkbox" data-id="med2"><span class="pi-text">기본 상비약<span class="pi-sub">소화제 · 지사제 · 감기약 · 진통제</span></span></label>
+      <label class="pack-item"><input type="checkbox" data-id="med3"><span class="pi-text">세안 · 기초화장품 파우치</span></label>
+      <label class="pack-item"><input type="checkbox" data-id="med4"><span class="pi-text">마스크 · 손소독제</span></label>
+    </div>
+
+    <div class="pack-cat">
+      <h3>🎒 기타</h3>
+      <label class="pack-item"><input type="checkbox" data-id="etc1"><span class="pi-text">접이식 장바구니<span class="pi-sub">니시키시장 · 키디랜드 쇼핑용</span></span></label>
+      <label class="pack-item"><input type="checkbox" data-id="etc2"><span class="pi-text">목베개 · 수면안대<span class="pi-sub">비행기용</span></span></label>
+      <label class="pack-item"><input type="checkbox" data-id="etc3"><span class="pi-text">작은 물통 · 손수건</span></label>
+      <label class="pack-item"><input type="checkbox" data-id="etc4"><span class="pi-text">여행용 세탁망 · 지퍼백<span class="pi-sub">세탁물 · 젖은 옷 분리용</span></span></label>
+    </div>
+
+  </div><!-- /tab-packing -->
+
 </div>
 <p class="note-foot">※ 요금 · 소요시간은 참고용 대략치예요. 환율 · 배차 시간표에 따라 달라질 수 있어 출발 전 다시 확인하시는 걸 추천해요.</p>
+
+<script>
+  function showTab(name){
+    document.getElementById('tab-itinerary').classList.toggle('active', name==='itinerary');
+    document.getElementById('tab-packing').classList.toggle('active', name==='packing');
+    document.getElementById('btn-itinerary').classList.toggle('active', name==='itinerary');
+    document.getElementById('btn-packing').classList.toggle('active', name==='packing');
+  }
+
+  // packing checklist persistence
+  (function(){
+    var boxes = document.querySelectorAll('.pack-item input[type="checkbox"]');
+    var STORAGE_KEY = 'kyoto-packing-checked-v1';
+    var saved = {};
+    try{ saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }catch(e){}
+
+    function updateProgress(){
+      var total = boxes.length, done = 0;
+      boxes.forEach(function(b){ if(b.checked) done++; });
+      document.getElementById('pack-progress').textContent = done + ' / ' + total + ' 챙김';
+    }
+
+    boxes.forEach(function(box){
+      var id = box.getAttribute('data-id');
+      if(saved[id]){
+        box.checked = true;
+        box.closest('.pack-item').classList.add('checked');
+      }
+      box.addEventListener('change', function(){
+        box.closest('.pack-item').classList.toggle('checked', box.checked);
+        saved[id] = box.checked;
+        try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(saved)); }catch(e){}
+        updateProgress();
+      });
+    });
+    updateProgress();
+  })();
+</script>
 </body>
 </html>
