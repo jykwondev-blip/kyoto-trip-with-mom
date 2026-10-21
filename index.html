@@ -203,6 +203,52 @@
     font-size:12px; color:var(--ink-soft); font-weight:600;
     text-align:right; margin:-6px 2px 14px;
   }
+
+  /* ---- caution tab ---- */
+  .maintabs button{font-size:13px; padding:12px 6px;}
+  .caution-lead{font-size:12px; color:var(--ink-soft); margin:-4px 2px 14px; line-height:1.6;}
+  .caution-cat{
+    background:var(--card); border-radius:18px; padding:18px 20px;
+    margin-bottom:14px; box-shadow:0 1px 3px rgba(31,32,36,0.05);
+  }
+  .caution-cat h3{font-size:14.5px; font-weight:800; margin:0 0 4px;}
+  .caution-cat .c-sub{font-size:11.5px; color:var(--ink-soft); margin:0 0 12px;}
+  .caution-cat ul{margin:0; padding:0; list-style:none;}
+  .caution-cat li{
+    position:relative; padding:8px 0 8px 14px;
+    border-top:1px solid var(--line); font-size:13px; line-height:1.55;
+  }
+  .caution-cat li:first-child{border-top:none; padding-top:0;}
+  .caution-cat li::before{
+    content:''; position:absolute; left:0; top:15px;
+    width:5px; height:5px; border-radius:50%; background:var(--accent);
+  }
+  .caution-cat li:first-child::before{top:7px;}
+  .caution-cat li b{font-weight:700;}
+  .unv{
+    display:inline-block; font-size:10px; font-weight:700;
+    color:var(--food); background:var(--food-bg);
+    padding:1px 7px; border-radius:100px; margin-left:4px; vertical-align:middle;
+  }
+
+  /* ---- also-visit box ---- */
+  .alsovisit{
+    margin-top:14px; background:var(--accent-soft);
+    border-radius:14px; padding:14px 16px;
+  }
+  .alsovisit .av-title{font-size:13px; font-weight:800; margin-bottom:6px;}
+  .alsovisit .av-title small{font-size:11px; font-weight:600; color:var(--ink-soft); margin-left:4px;}
+  .alsovisit ul{margin:0; padding:0; list-style:none;}
+  .alsovisit li{
+    position:relative; padding:5px 0 5px 12px;
+    font-size:12.5px; line-height:1.55;
+  }
+  .alsovisit li::before{
+    content:''; position:absolute; left:0; top:12px;
+    width:4px; height:4px; border-radius:50%; background:var(--accent);
+  }
+  .alsovisit li b{font-weight:700;}
+  .alsovisit li .d{color:var(--ink-soft);}
 </style>
 </head>
 <body>
@@ -216,7 +262,8 @@
 
   <div class="maintabs">
     <button id="btn-itinerary" class="active" onclick="showTab('itinerary')">📅 일정표</button>
-    <button id="btn-packing" onclick="showTab('packing')">🧳 준비물 체크리스트</button>
+    <button id="btn-packing" onclick="showTab('packing')">🧳 준비물</button>
+    <button id="btn-caution" onclick="showTab('caution')">⚠️ 유의사항</button>
   </div>
 
   <div id="tab-itinerary" class="tab-panel active">
@@ -259,7 +306,7 @@
             <span class="tag move">이동</span>
           </div>
         </div>
-        <div class="transit"><span class="t-icon"></span><span class="t-text">지하철</span><span class="t-meta">약 5분 · 220엔</span></div>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">지하철 (1정거장)</span><span class="t-meta">약 3분 · 220엔</span></div>
         <div class="stop">
           <span class="icon"></span>
           <div class="content">
@@ -278,11 +325,21 @@
             <span class="tag move">이동</span>
           </div>
         </div>
-        <div class="transit"><span class="t-icon"></span><span class="t-text">도보</span><span class="t-meta">약 15분 · 무료</span></div>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">지하철 (1정거장) + 도보</span><span class="t-meta">약 15분 · 220엔</span></div>
         <div class="stop">
           <span class="icon"></span>
           <div class="content">
-            <span class="time">오후 4~5시</span>
+            <span class="time">오후 4시</span>
+            <p class="title">멘야 이노이치 정리권 받기</p>
+            <p class="desc">예약 불가, 저녁 정리권은 16:00부터 배부(공식 안내 기준) · 일행 전원이 함께 가서 받고, 적힌 시간에 돌아와야 입장</p>
+            <span class="tag food">식사</span>
+          </div>
+        </div>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">도보</span><span class="t-meta">약 5분 · 무료</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">오후 4시 반~</span>
             <p class="title">가모강변 산책</p>
             <p class="desc">노을 지는 강변, 여유롭게 걸으며 몸 풀기</p>
             <span class="tag sight">산책</span>
@@ -292,9 +349,9 @@
         <div class="stop">
           <span class="icon"></span>
           <div class="content">
-            <span class="time">저녁 5시 반</span>
-            <p class="title">멘야 이노이치</p>
-            <p class="desc">가와라마치역 도보 3~5분 라멘 맛집 (11:00~14:30, 17:30~21:00 · 대기가 길 수 있어 오픈 시간에 맞춰 도착)</p>
+            <span class="time">정리권 시간</span>
+            <p class="title">멘야 이노이치 저녁 식사</p>
+            <p class="desc">가와라마치역 도보 3~5분 라멘 맛집 (영업 17:30~21:00 · 정리권에 적힌 시간에 맞춰 입장)</p>
             <span class="tag food">식사</span>
           </div>
         </div>
@@ -384,6 +441,13 @@
           </div>
         </div>
       </div>
+      <div class="alsovisit">
+        <div class="av-title">✨ 함께 가볼 곳<small>선택 · 시간 되면</small></div>
+        <ul>
+          <li><b>도후쿠지</b> <span class="d">— 후시미이나리에서 JR 교토 방면 한 정거장, 도후쿠지역에서 도보 10분. 9:00~16:30(최종 입장 16:00), 방장 정원 약 500엔(11월부터 600엔). 단풍은 11월 하순이 절정이라 지금은 푸른 정원 위주예요.</span></li>
+          <li><b>야사카탑 · 야사카 신사</b> <span class="d">— 산넨자카 길 위와 기온 입구에 있어 동선에 자연스럽게 들어와요.</span> <span class="unv">미확인</span></li>
+        </ul>
+      </div>
     </div>
   </details>
 
@@ -424,7 +488,7 @@
           <div class="content">
             <span class="time">점심~오후</span>
             <p class="title">타이쇼 하나나</p>
-            <p class="desc">텐류지 바로 인근, 아라시야마 맛집 (매일 11:00~16:30)</p>
+            <p class="desc">텐류지 바로 인근 도미 오차즈케 맛집 (11:00~16:30 · 예약 가능, 점심 대기가 길어 예약 권장 · 현금 준비)</p>
             <span class="tag food">식사</span>
           </div>
         </div>
@@ -438,6 +502,15 @@
             <span class="tag move">이동</span>
           </div>
         </div>
+      </div>
+      <div class="alsovisit">
+        <div class="av-title">✨ 함께 가볼 곳<small>선택 · 시간 되면</small></div>
+        <ul>
+          <li><b>산젠인 (오하라)</b> <span class="d">— 호센인에서 도보 3~5분, 입장료 700엔, 이끼 산책길. 오하라에서 1시간 정도 더 걸려요.</span></li>
+          <li><b>노노미야 신사</b> <span class="d">— 무료, 텐류지 북문 근처에서 도보 3분. 10~20분이면 보고 이끼 정원이 예뻐요.</span></li>
+          <li><b>오코치 산소</b> <span class="d">— 입장료 1,000엔(말차·과자 포함), 9:00~17:00(최종 입장 16:30). 대나무숲 안쪽에 있어 쉬어 가기 좋아요.</span></li>
+          <li><b>유사이테이</b> <span class="d">— 호즈가와 강변의 150년 된 건물(갤러리). 2,000엔, 10:00~17:00(최종 16:30), 목요일 휴관, 13세 이상만 입장, 단풍철 예약 권장. 시간이 빠듯해서 텐류지 대신일 때만 추천해요.</span></li>
+        </ul>
       </div>
     </div>
   </details>
@@ -512,11 +585,21 @@
             <span class="tag shop">쇼핑</span>
           </div>
         </div>
-        <div class="transit"><span class="t-icon"></span><span class="t-text">지하철 + JR (가라스마고조 경유 짐 픽업)</span><span class="t-meta">약 20분 · 약 370엔</span></div>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">도보 (또는 택시)</span><span class="t-meta">약 20분 · 무료 (택시 약 5~10분)</span></div>
         <div class="stop">
           <span class="icon"></span>
           <div class="content">
-            <span class="time">오후 3시 이후</span>
+            <span class="time">오후 3시 반경</span>
+            <p class="title">스마일호텔에서 짐 찾기</p>
+            <p class="desc">아침에 프런트에 맡긴 캐리어 픽업 (고조역 바로 앞)</p>
+            <span class="tag move">이동</span>
+          </div>
+        </div>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">지하철 + JR 사가노선 '보통' 열차</span><span class="t-meta">약 15분 · 약 370엔</span></div>
+        <div class="stop">
+          <span class="icon"></span>
+          <div class="content">
+            <span class="time">오후 4시경</span>
             <p class="title">우메코지 카덴쇼 체크인 (1박)</p>
             <p class="desc">체크인 15:00부터 · JR 우메코지쿄토니시역 도보 2분, 대욕장·가족탕 온천</p>
             <span class="tag onsen">온천</span>
@@ -532,6 +615,13 @@
             <span class="tag food">식사</span>
           </div>
         </div>
+      </div>
+      <div class="alsovisit">
+        <div class="av-title">✨ 함께 가볼 곳<small>선택 · 시간 되면</small></div>
+        <ul>
+          <li><b>우메코지 공원</b> <span class="d">— 카덴쇼 체크인 후 저녁 19:30 전에 역 옆 잔디 공원을 가볍게 산책해요.</span></li>
+          <li><b>교토철도박물관</b> <span class="d">— 27일은 열지만(10:00~17:00, 최종 입관 16:30, 1,500엔) 체크인 시간상 보기 어렵고, 28일(수)은 휴관이에요.</span></li>
+        </ul>
       </div>
     </div>
   </details>
@@ -556,7 +646,7 @@
             <span class="tag onsen">온천</span>
           </div>
         </div>
-        <div class="transit"><span class="t-icon"></span><span class="t-text">JR (교토역 경유)</span><span class="t-meta">약 3분 · 약 150엔</span></div>
+        <div class="transit"><span class="t-icon"></span><span class="t-text">JR 사가노선 '보통' 열차 (교토행)</span><span class="t-meta">약 3분 · 약 150엔</span></div>
         <div class="stop">
           <span class="icon"></span>
           <div class="content">
@@ -643,15 +733,87 @@
 
   </div><!-- /tab-packing -->
 
+  <div id="tab-caution" class="tab-panel">
+
+    <p class="caution-lead">확인한 정보를 기준으로 정리했어요. <span class="unv">미확인</span> 표시는 따로 확인하지 못한 내용이라 가기 전에 한 번 더 보세요.</p>
+
+    <div class="caution-cat">
+      <h3>🌿 전 일정 공통</h3>
+      <p class="c-sub">하루하루 챙길 것</p>
+      <ul>
+        <li><b>현금을 넉넉히</b> — 호센인(800엔)은 현금만 받고, 기요미즈데라도 현금이 필요하고, 타이쇼 하나나는 카드가 안 된다는 안내가 있어요.</li>
+        <li><b>체력 안배</b> — 25일(후시미이나리 계단, 기요미즈데라 돌계단·언덕)과 26일(버스 1시간 이상)이 가장 힘들어요. 컨디션에 따라 한두 곳은 빼도 괜찮아요.</li>
+      </ul>
+    </div>
+
+    <div class="caution-cat">
+      <h3>10/24 (토)</h3>
+      <p class="c-sub">도착 + 교토 첫 밤</p>
+      <ul>
+        <li><b>멘야 이노이치</b> — 예약이 안 되고, 16:00에 일행 전원이 함께 가서 정리권을 받아야 해요. 적힌 시간에 돌아와야 입장돼요.</li>
+        <li><b>기온 사유지 골목</b> — 들어가거나 사진을 찍으면 벌금 1만엔이에요. 하나미코지는 큰길에서만 보고, 마이코를 따라가거나 촬영하지 마세요.</li>
+        <li><b>가모강변</b> — 음식을 들고 있으면 솔개가 채가는 일이 있다고 알고 있어요. 앉아서 먹을 땐 조심하세요. <span class="unv">미확인</span></li>
+        <li><b>M&Maison</b> — 15:00에 닫으니 14시 전에 들어가세요.</li>
+      </ul>
+    </div>
+
+    <div class="caution-cat">
+      <h3>10/25 (일)</h3>
+      <p class="c-sub">후시미이나리 · 기요미즈데라 · 산넨자카</p>
+      <ul>
+        <li><b>후시미이나리</b> — 24시간 열려 있고 무료예요. 일요일이라 8시 전에 가세요. 정상까지는 왕복 2~3시간이라, 엄마와는 중턱 전망대까지만 가도 충분해요. <span class="unv">미확인</span></li>
+        <li><b>치이카와 모구모구 혼포</b> — 평소엔 예약이 필요 없어요. 신상품 발매일엔 입장 방식이 바뀔 수 있으니 공식 공지를 확인하세요. JR 이나리역에서 도보 5분, 참배길 위에 있어요.</li>
+        <li><b>기요미즈데라</b> — 6:00~18:00, 500엔(현금). 돌계단과 언덕이 많아 편한 신발이 필수예요. 단풍 야간 특별 관람은 11월 말부터라 이번엔 해당 없어요.</li>
+        <li><b>산넨자카·니넨자카</b> — 상점이 5~6시쯤 닫기 시작하니 쇼핑은 일찍 하세요. <span class="unv">미확인</span></li>
+        <li><b>소바노미 요시무라</b> — 17:00~20:45. 예약·대기 여부는 확인하지 못했어요. <span class="unv">미확인</span></li>
+      </ul>
+    </div>
+
+    <div class="caution-cat">
+      <h3>10/26 (월)</h3>
+      <p class="c-sub">오하라 · 아라시야마</p>
+      <ul>
+        <li><b>오하라 가는 길</b> — 교토역에서 17번 버스로 1시간 넘게 걸리고 좌석이 보장되지 않아요. 서서 가면 힘드니 일찍 타거나, 에이잔 전철을 경유하는 방법(약 50분~1시간)도 있어요. 돌아오는 막차 시간은 미리 확인하세요.</li>
+        <li><b>호센인</b> — 9:00~17:00, 입장료 800엔(말차·과자 포함, 현금만). 버스 정류장에서 도보 10~15분 오르막이에요.</li>
+        <li><b>아라시야마 대나무숲</b> — 무료이고 아침이 덜 붐벼요. 텐류지 입장료와 시간은 따로 확인하지 못했어요. <span class="unv">미확인</span></li>
+        <li><b>타이쇼 하나나</b> — 11:00~16:30. 예약 가능하고(전화 075-862-8771 또는 AutoReserve), 점심 대기가 길어서 예약을 권해요. 현금을 챙기세요.</li>
+      </ul>
+    </div>
+
+    <div class="caution-cat">
+      <h3>10/27 (화)</h3>
+      <p class="c-sub">시내 나들이 + 카덴쇼</p>
+      <ul>
+        <li><b>스마일호텔 짐 보관</b> — 메일 답장으로 무료 여부와 시간 제한을 확인하세요.</li>
+        <li><b>니조성</b> — 니노마루 궁전 안은 신발을 벗고 들어가고 내부 촬영은 금지라고 알고 있어요. 마지막 입장이 16시쯤이라 오전 방문이면 문제없어요. <span class="unv">미확인</span></li>
+        <li><b>Dontsuki</b> — 현재 영업 중인 가게는 마쓰바라도리(기요미즈고조 근처)의 8석 카운터라는 정보가 있어요. 주소와 영업시간을 구글맵에서 다시 확인하세요.</li>
+        <li><b>니시키시장</b> — 걸어 다니며 먹는 건 금지예요. 산 가게 앞에서 먹고 이동하세요. 대부분 17~18시에 닫아요. 스누피 차야는 예약·대기를 확인하지 못했어요. <span class="unv">미확인</span></li>
+        <li><b>토비치 교토</b> — 11:00~18:00, 휴무일이 불규칙해서 공식 캘린더를 확인하세요.</li>
+        <li><b>JR 보통 열차</b> — 우메코지쿄토니시역에는 사가노선 <b>보통 열차</b>만 서요. 쾌속은 지나가요.</li>
+        <li><b>우메코지 카덴쇼</b> — 체크인 15:00부터, 저녁은 19:30이에요. 그 전에 온천을 마치세요. 가족탕이 예약제인지 체크인 때 물어보고, 현장 결제 세금도 챙기세요.</li>
+      </ul>
+    </div>
+
+    <div class="caution-cat">
+      <h3>10/28 (수)</h3>
+      <p class="c-sub">귀국길</p>
+      <ul>
+        <li><b>체크아웃</b> — 09:00~11:00 사이예요.</li>
+        <li><b>공항</b> — 17:00 출발이니 늦어도 15시까지는 도착하세요. 하루카는 교토역에서 타고, 카덴쇼에서 교토역까지는 보통 열차를 타세요.</li>
+      </ul>
+    </div>
+
+  </div><!-- /tab-caution -->
+
 </div>
 <p class="note-foot">※ 요금 · 소요시간은 참고용 대략치예요. 환율 · 배차 시간표에 따라 달라질 수 있어 출발 전 다시 확인하시는 걸 추천해요.</p>
 
 <script>
   function showTab(name){
-    document.getElementById('tab-itinerary').classList.toggle('active', name==='itinerary');
-    document.getElementById('tab-packing').classList.toggle('active', name==='packing');
-    document.getElementById('btn-itinerary').classList.toggle('active', name==='itinerary');
-    document.getElementById('btn-packing').classList.toggle('active', name==='packing');
+    ['itinerary','packing','caution'].forEach(function(t){
+      document.getElementById('tab-'+t).classList.toggle('active', name===t);
+      document.getElementById('btn-'+t).classList.toggle('active', name===t);
+    });
   }
 
   // packing checklist persistence
